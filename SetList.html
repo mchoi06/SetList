@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+<script> 
+
+var setlist = 
+  {
+  "Set List": {
+    "1": {
+      "Artist(s)": [
+        "One Republic"
+      ],
+      "Title": "Counting Stars",
+      "Genre(s)": [
+        "Pop", "Folk pop", "Pop rock"
+      ],
+      "Year": 2013
+    },
+
+    "2": {
+      "Artist(s)": [
+        "Justin Bieber", "Nicki Minaj"
+      ],
+      "Title": "Beauty And A Beat",
+      "Genre(s)": [
+        "EDM", "Electropop", "Dubstep"
+      ],
+      "Year": 2012
+    },
+
+    "3": {
+      "Artist(s)": [
+        "Owl City", "Carly Rae Jepsen"
+      ],
+      "Title": "Good Time",
+      "Genre(s)": [
+        "Pop", "Dance-pop"
+      ],
+      "Year": 2012
+    },
+
+    "4": {
+      "Artist(s)": [
+        "David Guetta", "Justin Bieber"
+      ],
+      "Title": "2U",
+      "Genre(s)": [
+        "EDM", "Electropop", "Future bass"
+      ],
+      "Year": 2017
+    },
+
+    "5": {
+      "Artist(s)": [
+        "The Chainsmokers", "Halsey"
+      ],
+      "Title": "Closer",
+      "Genre(s)": [
+        "Pop", "Future bass"
+      ],
+      "Year": 2016
+    },
+
+    "6": {
+      "Artist(s)": [
+        "DJ Snake", "Justin Bieber"
+      ],
+      "Title": "Let Me Love You",
+      "Genre(s)": [
+        "EDM", "Tropical House"
+      ],
+      "Year": 2016
+    },
+
+    "7": {
+      "Artist(s)": [
+        "Justin Bieber"
+      ],
+      "Title": "Sorry",
+      "Genre(s)": [
+        "Pop", "Dance-pop", "Tropical House"
+      ],
+      "Year": 2015
+    },
+
+    "8": {
+      "Artist(s)": [
+        "Arianna Grande", "Iggy Azalea"
+      ],
+      "Title": "Problem",
+      "Genre(s)": [
+        "Pop", "Dance-pop", "R&B"
+      ],
+      "Year": 2014
+    },
+
+    "9": {
+      "Artist(s)": [
+        "Nickelback"
+      ],
+      "Title": "Photograph",
+      "Genre(s)": [
+        "Rock", "Post-grunge"
+      ],
+      "Year": 2005
+    },
+
+    "10": {
+      "Artist(s)": [
+        "Kelly Clarkson"
+      ],
+      "Title": "Catch My Breath",
+      "Genre(s)": [
+        "Pop", "Electropop"
+      ],
+      "Year": 2012
+      }
+    }
+  }
+
+jsonS = JSON.stringify(setlist);
+jsonP = JSON.parse(jsonS);
+
+$('#serialized').ready(function(){
+  $('#serialized').html(jsonS + "<br></br>"); 
+  for (i=1;i<=10;i++) {
+  $('#display').append('<b>' + i + '. ' + jsonP['Set List'][i]['Title']+ '</b><br>');
+  $('#display').append('Artist(s): ' + jsonP['Set List'][i]['Artist(s)'] + '<br>'); 
+  $('#display').append('Genre(s): ' + jsonP['Set List'][i]['Genre(s)'] + '<br>'); 
+  $('#display').append('Released: ' + jsonP['Set List'][i]['Year'] + '<br>');  
+  $('#display').append('<br>');  
+  } 
+});
+
+
+</script>
+
+<div id="serialized"></div>
+
+<div id="display"></div>
+
+<form method="get">
+  Sort by Genre: 
+  <select id="genre">
+    <option value="Pop">Pop</option>
+    <option value="Folk pop">Folk pop</option>
+    <option value="Pop rock">Pop rock</option>    
+    <option value="Dance-pop">Dance-pop</option>
+    <option value="EDM">EDM</option>
+    <option value="Electropop">Electropop</option>
+    <option value="Dubstep">Dubstep</option>
+    <option value="Future bass">Future bass</option>
+    <option value="Tropical House">Tropical House</option>
+    <option value="R&B">R&B</option>
+    <option value="Rock">Rock</option>
+    <option value="Post-grunge">Post-grunge</option>
+  </select>
+  <br><br>
+  <button type="button" id="button">Sort</button>
+</form>
+<br>
+
+<script>
+$('#sorted').ready(function(){
+    $('button').click(function(){
+      $('#serialized').empty();
+      $('#display').empty();      
+      $('#sorted').empty();
+      for (i=1;i<=10;i++){
+        for (j = 0; j < jsonP['Set List'][i]['Genre(s)'].length; j++){
+          if((jsonP['Set List'][i]['Genre(s)'][j]) == $('select#genre').val()){
+            $('#sorted').append('<b>' + i + '. ' + jsonP['Set List'][i]['Title']+ '</b><br>');
+            $('#sorted').append('Artist(s): ' + jsonP['Set List'][i]['Artist(s)'] + '<br>'); 
+            $('#sorted').append('Genre(s): ' + jsonP['Set List'][i]['Genre(s)'] + '<br>'); 
+            $('#sorted').append('Released: ' + jsonP['Set List'][i]['Year'] + '<br>');  
+            $('#sorted').append('<br>');  
+          }
+        }
+      }
+    });
+  });
+</script>
+<div id="sorted"></div>
+</body>
