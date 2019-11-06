@@ -129,9 +129,27 @@ jsonP = JSON.parse(jsonS);
 $('#serialized').ready(function(){
   $('#serialized').html(jsonS + "<br></br>"); 
   for (i=1;i<=10;i++) {
-  $('#display').append('<b>' + i + '. ' + jsonP['Set List'][i]['Title']+ '</b><br>');
-  $('#display').append('Artist(s): ' + jsonP['Set List'][i]['Artist(s)'] + '<br>'); 
-  $('#display').append('Genre(s): ' + jsonP['Set List'][i]['Genre(s)'] + '<br>'); 
+    $('#display').append('<b>' + i + '. ' + jsonP['Set List'][i]['Title']+ '</b><br>');
+    if (jsonP['Set List'][i]['Artist(s)'].length == 1){  
+      $('#display').append('Artist(s): ' + jsonP['Set List'][i]['Artist(s)'] + '<br>'); 
+    }
+    else {
+      $('#display').append('Artist(s): ' + jsonP['Set List'][i]['Artist(s)'][0]); 
+      for (j=1;j<jsonP['Set List'][i]['Artist(s)'].length;j++){
+        $('#display').append(', ' + jsonP['Set List'][i]['Artist(s)'][j]); 
+        $('#display').append('<br>'); 
+      }
+    }
+    if (jsonP['Set List'][i]['Genre(s)'].length == 1){  
+      $('#display').append('Genre(s): ' + jsonP['Set List'][i]['Genre(s)'] + '<br>'); 
+    }
+    else {
+      $('#display').append('Genre(s): ' + jsonP['Set List'][i]['Genre(s)'][0]); 
+      for (j=1;j<jsonP['Set List'][i]['Genre(s)'].length;j++){
+        $('#display').append(', ' + jsonP['Set List'][i]['Genre(s)'][j]); 
+      }
+      $('#display').append('<br>');       
+    }  
   $('#display').append('Released: ' + jsonP['Set List'][i]['Year'] + '<br>');  
   $('#display').append('<br>');  
   } 
@@ -172,11 +190,29 @@ $('#sorted').ready(function(){
       $('#display').empty();      
       $('#sorted').empty();
       for (i=1;i<=10;i++){
-        for (j = 0; j < jsonP['Set List'][i]['Genre(s)'].length; j++){
+        for (j=0;j<jsonP['Set List'][i]['Genre(s)'].length;j++){
           if((jsonP['Set List'][i]['Genre(s)'][j]) == $('select#genre').val()){
             $('#sorted').append('<b>' + i + '. ' + jsonP['Set List'][i]['Title']+ '</b><br>');
-            $('#sorted').append('Artist(s): ' + jsonP['Set List'][i]['Artist(s)'] + '<br>'); 
-            $('#sorted').append('Genre(s): ' + jsonP['Set List'][i]['Genre(s)'] + '<br>'); 
+            if (jsonP['Set List'][i]['Artist(s)'].length == 1){  
+              $('#sorted').append('Artist(s): ' + jsonP['Set List'][i]['Artist(s)'] + '<br>'); 
+            }
+            else {
+              $('#sorted').append('Artist(s): ' + jsonP['Set List'][i]['Artist(s)'][0]); 
+              for (j=1;j<jsonP['Set List'][i]['Artist(s)'].length;j++){
+                $('#sorted').append(', ' + jsonP['Set List'][i]['Artist(s)'][j]); 
+              }
+            $('#sorted').append('<br>'); 
+            }
+            if (jsonP['Set List'][i]['Genre(s)'].length == 1){  
+              $('#sorted').append('Genre(s): ' + jsonP['Set List'][i]['Genre(s)'] + '<br>'); 
+            }
+            else {
+              $('#sorted').append('Genre(s): ' + jsonP['Set List'][i]['Genre(s)'][0]); 
+              for (j=1;j<jsonP['Set List'][i]['Genre(s)'].length;j++){
+                $('#sorted').append(', ' + jsonP['Set List'][i]['Genre(s)'][j]); 
+              }
+            $('#sorted').append('<br>'); 
+            }            
             $('#sorted').append('Released: ' + jsonP['Set List'][i]['Year'] + '<br>');  
             $('#sorted').append('<br>');  
           }
@@ -184,6 +220,8 @@ $('#sorted').ready(function(){
       }
     });
   });
+
 </script>
 <div id="sorted"></div>
 </body>
+</html>
